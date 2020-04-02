@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rock Paper Scissors</title>
+    <meta charset="UTF-8" />
+</head>
+<body>
+    <button type='button' id='rock' class='button'>Rock</button>
+    <button type='button' id='paper' class='button'>Paper</button>
+    <button type='button' id='scissors' class='button'>Scissors</button>
+    <div id='computer-selection'>Computer Selection: </div>
+    <div id='result'></div>
+    <div id='player-score'>Your Score: </div>
+    <div id='computer-score'>Computer Score:</div>
+    <div id='final-results'></div>
+    <script>
+        let playerScore = 0;
+        let computerScore = 0;
+        function computerPlay() {
+            let number = Math.random();
+            if (number < .33) {
+                return "rock";
+            }
+            else if (number > 0.67) {
+                return "paper";
+            }
+            else {
+                return "scissors";
+            }
+        }
+        const buttons = document.querySelectorAll('.button'); //selects all 3 buttons in a constant
+        buttons.forEach(button => button.addEventListener('click', playRound));  //adds event listener for any of buttons being clicked
+        buttons.forEach(button => button.addEventListener('click', endGame));
+        const compSelectionDiv = document.querySelector('#computer-selection');
+        const resultDiv = document.querySelector('#result');
+        const playerScoreDiv = document.querySelector('#player-score')
+        const computerScoreDiv = document.querySelector('#computer-score')
+        function playRound (e, playerSelection, computerSelection) {
+            if (computerScore == 0 && playerScore == 0) {
+                finalResultsDiv.textContent = '';
+            }
+            playerSelection = e.target.id;
+            computerSelection = computerPlay();
+            if (playerSelection == "rock") {
+                if (computerSelection == "rock") {
+                    compSelectionDiv.textContent = `Computer Selection: ${computerSelection}`;
+                    resultDiv.textContent = "Rock and Rock are the same. It's a draw!";
+                    playerScoreDiv.textContent = `Your Score: ${playerScore.toString()}`;
+                    computerScoreDiv.textContent = `Computer Score: ${computerScore.toString()}`;
+                }
+                else if (computerSelection == "paper") {
+                    computerScore += 1;
+                    compSelectionDiv.textContent = `Computer Selection: ${computerSelection}`;                    
+                    resultDiv.textContent = "Paper beats Rock. You lose!";
+                    playerScoreDiv.textContent = `Your Score: ${playerScore.toString()}`;
+                    computerScoreDiv.textContent = `Computer Score: ${computerScore.toString()}`;
+                }
+                else if (computerSelection == "scissors") {
+                    playerScore += 1;
+                    compSelectionDiv.textContent = `Computer Selection: ${computerSelection}`;                    
+                    resultDiv.textContent = "Rock beats Scissors. You win!";
+                    playerScoreDiv.textContent = `Your Score: ${playerScore.toString()}`;
+                    computerScoreDiv.textContent = `Computer Score: ${computerScore.toString()}`;
+                }
+            }
+            else if (playerSelection == "paper") {
+                if (computerSelection == "paper") {
+                    compSelectionDiv.textContent = `Computer Selection: ${computerSelection}`;
+                    resultDiv.textContent = "Paper and Paper are the same. It's a draw!"
+                    playerScoreDiv.textContent = `Your Score: ${playerScore.toString()}`;
+                    computerScoreDiv.textContent = `Computer Score: ${computerScore.toString()}`;
+                }
+                else if (computerSelection == "rock") {
+                    playerScore += 1;
+                    compSelectionDiv.textContent = `Computer Selection: ${computerSelection}`;
+                    resultDiv.textContent = "Paper beats Rock. You win!";
+                    playerScoreDiv.textContent = `Your Score: ${playerScore.toString()}`;
+                    computerScoreDiv.textContent = `Computer Score: ${computerScore.toString()}`;
+                }
+                else if (computerSelection == "scissors") {
+                    computerScore += 1;
+                    compSelectionDiv.textContent = `Computer Selection: ${computerSelection}`;
+                    resultDiv.textContent = "Scissors beat Paper. You lose!";
+                    playerScoreDiv.textContent = `Your Score: ${playerScore.toString()}`;
+                    computerScoreDiv.textContent = `Computer Score: ${computerScore.toString()}`;
+                }
+            }
+            else if (playerSelection == "scissors") {
+                if (computerSelection == "scissors") {
+                    compSelectionDiv.textContent = `Computer Selection: ${computerSelection}`;
+                    resultDiv.textContent = "Scissors and Scissors are the same. It's a draw!"
+                    playerScoreDiv.textContent = `Your Score: ${playerScore.toString()}`;
+                    computerScoreDiv.textContent = `Computer Score: ${computerScore.toString()}`;
+                }
+                else if (computerSelection == "rock") {
+                    computerScore += 1;
+                    compSelectionDiv.textContent = `Computer Selection: ${computerSelection}`;
+                    resultDiv.textContent = "Rock beats Scissors. You lose!";
+                    playerScoreDiv.textContent = `Your Score: ${playerScore.toString()}`;
+                    computerScoreDiv.textContent = `Computer Score: ${computerScore.toString()}`;
+                }
+                else if (computerSelection == "paper") {
+                    playerScore += 1;
+                    compSelectionDiv.textContent = `Computer Selection: ${computerSelection}`;
+                    resultDiv.textContent = "Scissors beats Paper. You Win!";
+                    playerScoreDiv.textContent = `Your Score: ${playerScore.toString()}`;
+                    computerScoreDiv.textContent = `Computer Score: ${computerScore.toString()}`;
+                }
+            }
+            else {
+                computerScore += 1;
+                return "You did not enter a valid option. You lose!";
+            }
+        }
+        let computerSelection = 0;
+        let playerSelection = 0;
+        const finalResultsDiv = document.querySelector('#final-results');
+        function endGame() {
+           if (playerScore < 5 && computerScore < 5) return;
+            
+            if (playerScore > computerScore) {
+                finalResultsDiv.textContent = `You win, ${playerScore} to ${computerScore}!`;
+                computerScore = 0;
+                playerScore = 0;
+            }
+            else if (playerScore < computerScore) {
+                finalResultsDiv.textContent = `You lose, ${playerScore} to ${computerScore}!`;
+                computerScore = 0;
+                playerScore = 0;
+            }
+            else if (playerScore == computerScore) {
+                finalResultsDiv.textContent = `It's a draw, ${playerScore} to ${computerScore}!`;
+                computerScore = 0;
+                playerScore = 0;
+            }
+
+        }
+    </script>
+</body>
+</html>
